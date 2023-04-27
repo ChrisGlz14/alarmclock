@@ -1,5 +1,10 @@
 const currentTime = document.querySelector("h1");
+const content = document.querySelector(".content")
 const selectMenu = document.querySelectorAll("select");
+const setAlarmBtn = document.querySelector("button")
+
+let alarmTime;
+let ringtone = new Audio("sound\alarma-good-morning-5-5.mp3")
 
 for (let i = 12; i > 0; i--) {
     i = i < 10 ? "0" + i : i; //Operador ternario para agregar un cero delante de los números menores a 10. de lo contrario, i se mantiene igual.
@@ -29,8 +34,9 @@ setInterval(() => {
     s = date.getSeconds(),
     ampm = "AM";
 
-    if (h >= 12){
-        return "PM";
+    if (h >= 12){           //Si h es mayor o igual que 12 devuelve PM
+        ampm = "PM";
+        h -= 12;
     }
 
 h = h == 0 ? h = 12 : h; //En caso de que hora sea 0, cambiara a 12
@@ -41,7 +47,26 @@ m = m < 10 ? "0" + m : m;
 s = s < 10 ? "0" + s : s;
 
 currentTime.innerText = `${h}:${m}:${s} ${ampm}`;
+
+if (alarmTime === `${h}:${m} ${ampm}`) {
+    ringtone.play();
+    ringtone.loop = true;
+    }
 }, 1000);
+
+function setAlarm() {
+    // tomamos los datos de hs, min, seg y seleccionamos su valor.
+    let time = `${selectMenu[0].value}:${selectMenu[1].value}:${selectMenu[2].value}`;
+
+    if (time.includes("Hora") || time.includes("Minutos") || time.includes("AM/PM")){ 
+        return alert("Debes ingresar una hora para activar alarma.");
+    }
+    alarmTime = time;
+    content.classList.add("disable");
+    setAlarmBtn.innerText = "Desactivar Alarma"
+}
+
+setAlarmBtn.addEventListener("click", setAlarm);
 
 
 

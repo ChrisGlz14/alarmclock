@@ -41,6 +41,11 @@ margin: 30px 0;
     justify-content: space-between;
 }
 
+.wrapper .content .disable { /*La clase disable aparece en la linea 55 del JS */
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .content .column {
     padding: 0 10px;
     border-radius: 5px;
